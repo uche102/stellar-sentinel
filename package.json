@@ -4,9 +4,9 @@
   "description": "Open-source observability and security monitoring platform for Stellar Soroban smart contracts.",
   "main": "index.js",
   "scripts": {
-  "dev": "tsx src/index.ts",
-  "build": "tsc",
-  "start": "node dist/index.js"
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -21,10 +21,12 @@
   "homepage": "https://github.com/uche102/stellar-sentinel#readme",
   "dependencies": {
     "@stellar/stellar-sdk": "^17.0.1",
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
     "@types/node": "^22.20.2",
+    "@types/pg": "^8.23.1",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
   }

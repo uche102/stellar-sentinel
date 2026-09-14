@@ -1,6 +1,6 @@
 import stellarSdk = require("@stellar/stellar-sdk");
 
-const { scValToNative, xdr, StrKey } = stellarSdk;
+const { scValToNative,xdr, StrKey } = stellarSdk;
 
 function decodeScVal(value: unknown): unknown {
   // The SDK may already return an ScVal object.
@@ -18,8 +18,8 @@ function decodeScVal(value: unknown): unknown {
     return scValToNative(scVal);
   }
 
-  return value;
 }
+  
 
 function normalizeContractId(contractId: unknown): string {
   if (typeof contractId === "string") {

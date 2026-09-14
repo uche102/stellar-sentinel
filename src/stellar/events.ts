@@ -1,21 +1,46 @@
 import { stellarRpc } from "./rpc";
 
-export async function getRecentEvents() {
-  const latestLedger = await stellarRpc.getLatestLedger();
+export async function getEventsBetween(
+  startLedger: number,
+  endLedger: number
+) {
+  const allEvents = [];
 
-  const startLedger = latestLedger.sequence - 100;
+  let cursor: string | undefined;
 
-  const result = await stellarRpc.getEvents({
-    startLedger,
-    filters: [
-      {
-        type: "contract",
-      },
-    ],
-    pagination: {
-      limit: 10,
-    },
-  });
+  while (true) {
+    const request: any = {
+      filters: [
+        {
+          type: "contract",
+        },
+      ],
+      limit: 100,
+    };
 
-  return result;
+    if (cursor) {
+      request.cursor = cursor;
+    } else {
+      request.startLedger = startLedger;
+      request.endLedger = endLedger;
+    }
+
+    const result = await stellarRpc.getEvents(request);
+
+    allEvents.push(...result.events);
+
+    console.log(
+      `Fetched ${result.events.length} events (total: ${allEvents.length})`
+    );
+
+    if (!result.cursor || result.events.length === 0) {
+      break;
+    }
+
+    cursor = result.cursor;
+  }
+
+  return {
+    events: allEvents,
+  };
 }
